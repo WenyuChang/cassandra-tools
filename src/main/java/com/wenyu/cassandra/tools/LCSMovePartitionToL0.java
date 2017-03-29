@@ -45,7 +45,14 @@ public class LCSMovePartitionToL0 {
     private static List<String> getSSTables(String ks, String cf, String key) {
         NodeProbe probe = connect();
         List<String> sstables = probe.getSSTables(ks, cf, key);
-        out.println("Found " + sstables.size() + " sstables. \n[" + String.join(", ", sstables) + "]");
+
+        StringBuilder log = new StringBuilder("Found " + sstables.size() + " sstables. \n[");
+        for (String sstable : sstables) {
+            log.append(sstable + ",");
+        }
+        log.append("]");
+        out.println(log.toString());
+
         return sstables;
     }
 
@@ -60,7 +67,14 @@ public class LCSMovePartitionToL0 {
                 filtered.add(sstable);
             }
         }
-        out.println("Found " + filtered.size() + " sstables that are on higher level. \n[" + String.join(", ", filtered) + "]");
+
+        StringBuilder log = new StringBuilder("Found " + filtered.size() + " sstables that are on higher level. \n[");
+        for (String sstable : filtered) {
+            log.append(sstable + ",");
+        }
+        log.append("]");
+        out.println(log.toString());
+
         return filtered;
     }
 
